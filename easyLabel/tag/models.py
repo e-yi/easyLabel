@@ -19,7 +19,7 @@ class Picture(models.Model):
     origin = models.CharField(max_length=255)  # 图片从何而来
     size = models.IntegerField()
     image = models.ImageField(upload_to='images')
-    label1 = models.ForeignKey(Label1, on_delete=models.SET_NULL)
+    label1 = models.ForeignKey(Label1, on_delete=models.SET(None))
 
     def __str__(self):
         return "picture {} size:{}*{} at {}".format(
