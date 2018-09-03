@@ -18,8 +18,8 @@ class Picture(models.Model):
     name = models.CharField(max_length=255)
     origin = models.CharField(max_length=255)  # 图片从何而来
     size = models.IntegerField()
-    image = models.ImageField(upload_to='images')
-    label1 = models.ForeignKey(Label1, on_delete=models.SET(None))
+    imageRelativeUrl = models.URLField(null=True)
+    label1 = models.ForeignKey(Label1, on_delete=models.SET(None), null=True)
 
     def __str__(self):
         return "picture {} size:{}*{} at {}".format(
