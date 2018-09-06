@@ -3,19 +3,23 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from .models import Picture, Label1
-from .serializers import PictureSerializer, Label1Serializer
+from .serializers import PictureSerializer, Label1Serializer, InfoSerializer
 
 
 @api_view(['GET'])
 def picture_info(request):
     """
     查询图片库信息 如总数，id分别为等
-    TODO
     :param request:
     :return:
     """
-    if request.method=='GET':
-        pass
+    if request.method == 'GET':
+        ImageCount = Picture.objects.count()
+        serializer = InfoSerializer(data={'count': ImageCount})
+        if serializer.is_valid():
+            return Response(data=serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['GET'])
 def picture_list(request):

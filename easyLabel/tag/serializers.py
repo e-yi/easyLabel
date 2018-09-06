@@ -14,3 +14,15 @@ class Label1Serializer(serializers.ModelSerializer):
     class Meta:
         model = Label1
         fields = ('id', 'label')
+
+
+class Info:
+    def __init__(self, count):
+        self.count = count
+
+
+class InfoSerializer(serializers.Serializer):
+    """
+    统计信息
+    """
+    count = serializers.IntegerField()
