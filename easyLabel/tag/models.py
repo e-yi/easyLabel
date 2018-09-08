@@ -5,7 +5,7 @@ class Label1(models.Model):
     """
     可能有多个标签类型，比如发型、脸型之类，所以此处标号为1
     """
-    label = models.CharField(max_length=255)
+    label = models.CharField(max_length=255,primary_key=True)
 
     def __str__(self):
         return self.label
