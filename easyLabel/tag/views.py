@@ -52,11 +52,24 @@ def picture_detail(request, pk):
         return Response(serializer.data)
 
     elif request.method == 'PATCH':
-        serializer = PictureSerializer(picture, data={'label1':request.data['label1']},partial=True)
+        serializer = PictureSerializer(picture, data={'label1': request.data['label1']}, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', ])
+def picture_random(request):
+    """
+    返回一个没打过标签的图片
+    :param request:
+    :return:
+    """
+    CACHE_NUM = 3
+    pictures = Picture.objects.filter(label1__isnull=True)[:CACHE_NUM]
+    serializer = PictureSerializer(pictures, many=True)
+    return Response(serializer.data)
 
 
 @api_view(['GET', 'POST'])
@@ -67,7 +80,7 @@ def label1_list(request):
     :return: （更新后）所有标签列表
     """
     if request.method == 'GET':
-        labels = Label1.objects.all();
+        labels = Label1.objects.all()
         serializer_labels = Label1Serializer(labels, many=True)
         return Response(serializer_labels.data)
     elif request.method == 'POST':

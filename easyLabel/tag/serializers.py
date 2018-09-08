@@ -13,7 +13,7 @@ class PictureSerializer(serializers.ModelSerializer):
 class Label1Serializer(serializers.ModelSerializer):
     class Meta:
         model = Label1
-        fields = ('id', 'label')
+        fields = ('label', )
 
 
 class Info:

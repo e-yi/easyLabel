@@ -20,7 +20,8 @@ class Picture(models.Model):
     width = models.IntegerField()
     height = models.IntegerField()
     imageRelativeUrl = models.URLField()
-    label1 = models.ForeignKey(Label1, on_delete=models.SET(None), null=True)
+    label1 = models.ForeignKey(Label1, on_delete=models.SET(None), null=True,
+                               blank=True, )
 
     def __str__(self):
         return "picture {} size:{}*{} at {}".format(
