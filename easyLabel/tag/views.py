@@ -34,7 +34,7 @@ def picture_list(request):
         return Response(serializer.data)
 
 
-@api_view(['GET', 'PUT'])
+@api_view(['GET', 'PATCH'])
 def picture_detail(request, pk):
     """
     获取或更新一个picture实例
@@ -51,8 +51,8 @@ def picture_detail(request, pk):
         serializer = PictureSerializer(picture)
         return Response(serializer.data)
 
-    elif request.method == 'PUT':
-        serializer = PictureSerializer(picture, data=request.data)
+    elif request.method == 'PATCH':
+        serializer = PictureSerializer(picture, data={'label1':request.data['label1']},partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
