@@ -24,8 +24,8 @@ class Picture(models.Model):
                                blank=True, )
 
     def __str__(self):
-        return "picture {} size:{}*{} at {}".format(
-            self.name, self.width, self.height, self.imageRelativeUrl)
+        return "picture {} {} size:{}*{} at {}".format(
+            self.id, self.name, self.width, self.height, self.imageRelativeUrl)
 
     def get_absolute_url(self):
         return 'picture_detail', None, {'object_id':self.id}
