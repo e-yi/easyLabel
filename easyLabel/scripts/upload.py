@@ -11,18 +11,19 @@ def run():
 
     print(' image_path:{}\n rootUrl:{} \n origin:{} \n'
           ' width:{} height:{}\n continue? y/n'.format(
-              path, rootUrl, origin, width, height))
+           path, rootUrl, origin, width, height))
 
     if input() == 'y':
         pass
     else:
         return
-    
-    with open(path,'r') as f:
+
+    with open(path, 'r') as f:
         for line in f:
-            picture = Picture(name=line.strip()), origin=origin, width=width,
-                height=height, imageRelativeUrl=rootUrl + origin + '/' + file,
-                label1=None)
-        
+            fileName = line.strip()
+            picture = Picture(name=fileName, origin=origin, width=width, height=height,
+                              imageRelativeUrl=rootUrl + origin + '/' + fileName,
+                              label1=None)
+
     # print(picture)
     picture.save()
