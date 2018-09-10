@@ -20,6 +20,8 @@ def run():
 
     with open(path, 'r') as f:
         for line in f:
+            if not line:
+                continue
             fileName = line.strip()
             picture = Picture(name=fileName, origin=origin, width=width, height=height,
                               imageRelativeUrl=rootUrl + origin + '/' + fileName,
