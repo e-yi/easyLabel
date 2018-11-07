@@ -6,7 +6,7 @@ from .models import Picture, Label1
 class PictureAdmin(admin.ModelAdmin):
     list_display = ('name', 'origin', 'height', 'width', 'imageRelativeUrl', 'label1', 'updated')
     list_filter = ('origin', 'label1', 'updated')
-    search_fields = ('name', 'label1', 'origin')
+    search_fields = ('name', 'label1__label', 'origin')
     ordering = ['name']
 
 
