@@ -4,7 +4,7 @@ import os
 
 def run():
     path = './faceV5.txt'
-    rootUrl = 'http://pegn6g07j.bkt.clouddn.com/'
+    rootUrl = 'http://pic.puzzledsky.cn/'
     origin = 'CASIA-FaceV5'
     width = 640
     height = 480
