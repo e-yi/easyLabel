@@ -62,16 +62,27 @@ def picture_detail(request, pk):
 @api_view(['GET', ])
 def picture_random(request):
     """
-    返回一个没打过标签的图片
+    返回一组没打过标签的图片
     :param request:
     :return:
     """
     CACHE_NUM = 3
     # order_by('?')是一个低效的解决方案，鉴于目前数据量较少，故使用
-    pictures = Picture.objects.filter(label1__isnull=True).order_by('?')[:CACHE_NUM]
+    pictures = Picture.objects.filter(label1=request.data['label1']).order_by('updated')[:CACHE_NUM]
     serializer = PictureSerializer(pictures, many=True)
     return Response(serializer.data)
 
+@api_view(['GET', ])
+def picture_review(request):
+    """
+    返回一组打过标签的图片
+    :param request:
+    :return:
+    """
+    CACHE_NUM = 3
+    pictures = Picture.objects.filter(label1__isnull=True).order_by('-updated')[:CACHE_NUM]
+    serializer = PictureSerializer(pictures, many=True)
+    return Response(serializer.data)
 
 @api_view(['GET', 'POST'])
 def label1_list(request):
@@ -92,3 +103,4 @@ def label1_list(request):
             serializer_labels = Label1Serializer(labels, many=True)
             return Response(serializer_labels.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+

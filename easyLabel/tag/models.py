@@ -5,7 +5,7 @@ class Label1(models.Model):
     """
     可能有多个标签类型，比如发型、脸型之类，所以此处标号为1
     """
-    label = models.CharField(max_length=255,primary_key=True)
+    label = models.CharField(max_length=255, primary_key=True)
 
     def __str__(self):
         return self.label
@@ -22,12 +22,13 @@ class Picture(models.Model):
     imageRelativeUrl = models.URLField()
     label1 = models.ForeignKey(Label1, on_delete=models.SET(None), null=True,
                                blank=True, )
+    updated = models.DateTimeField(auto_now=True)
+
+
 
     def __str__(self):
-        return "picture {} {} size:{}*{} at {}".format(
-            self.id, self.name, self.width, self.height, self.imageRelativeUrl)
+        return "picture {} '{}' size:{}*{} updated at {}".format(
+            self.id, self.name, self.width, self.height, self.updated)
 
     def get_absolute_url(self):
-        return 'picture_detail', None, {'object_id':self.id}
-
-
+        return 'picture_detail', None, {'object_id': self.id}
