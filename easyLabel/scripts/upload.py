@@ -3,7 +3,7 @@ import os
 
 
 def run():
-    path = './faceV5.txt'
+    path = '../faceV5.txt'
     rootUrl = 'http://pic.puzzledsky.cn/'
     origin = 'CASIA-FaceV5'
     width = 640
@@ -26,6 +26,7 @@ def run():
             picture = Picture(name=fileName, origin=origin, width=width, height=height,
                               imageRelativeUrl=rootUrl + origin + '/' + fileName,
                               label1=None)
+            picture.save()
 
     # print(picture)
-    picture.save()
+
