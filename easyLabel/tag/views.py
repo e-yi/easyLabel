@@ -72,17 +72,20 @@ def picture_random(request):
     serializer = PictureSerializer(pictures, many=True)
     return Response(serializer.data)
 
+
 @api_view(['GET', ])
-def picture_review(request):
+def picture_review(request, label1):
     """
     返回一组打过标签的图片
+    :param label1:
     :param request:
     :return:
     """
     CACHE_NUM = 3
-    pictures = Picture.objects.filter(label1=request.data['label1']).order_by('-updated')[:CACHE_NUM]
+    pictures = Picture.objects.filter(label1=label1).order_by('-updated')[:CACHE_NUM]
     serializer = PictureSerializer(pictures, many=True)
     return Response(serializer.data)
+
 
 @api_view(['GET', 'POST'])
 def label1_list(request):
@@ -103,4 +106,3 @@ def label1_list(request):
             serializer_labels = Label1Serializer(labels, many=True)
             return Response(serializer_labels.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
