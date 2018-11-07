@@ -10,6 +10,8 @@ urlpatterns = [
          views.picture_random),
     path('pictures/<int:pk>/',
          views.picture_detail),
+    path('pictures/review/',
+         views.picture_review),
     path('tags/',
          views.label1_list),
 ]
