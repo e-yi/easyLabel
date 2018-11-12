@@ -82,7 +82,7 @@ def picture_review(request, label1, step=0):
     :param request:
     :return:
     """
-    CACHE_NUM = 3
+    CACHE_NUM = 5
     pictures = Picture.objects.filter(label1=label1) \
         .order_by('-updated')[step*CACHE_NUM:(step+1)*CACHE_NUM]
     serializer = PictureSerializer(pictures, many=True)
