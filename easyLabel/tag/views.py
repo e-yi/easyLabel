@@ -74,15 +74,17 @@ def picture_random(request):
 
 
 @api_view(['GET', ])
-def picture_review(request, label1):
+def picture_review(request, label1, step=0):
     """
     返回一组打过标签的图片
+    :param step:
     :param label1:
     :param request:
     :return:
     """
     CACHE_NUM = 3
-    pictures = Picture.objects.filter(label1=label1).order_by('-updated')[:CACHE_NUM]
+    pictures = Picture.objects.filter(label1=label1) \
+        .order_by('-updated')[step*CACHE_NUM:(step+1)*CACHE_NUM]
     serializer = PictureSerializer(pictures, many=True)
     return Response(serializer.data)
 

@@ -12,6 +12,8 @@ urlpatterns = [
          views.picture_detail),
     path('pictures/review/<label1>',
          views.picture_review),
+    path('picture/review/<label1>/<int:step>',
+         views.picture_review),
     path('tags/',
          views.label1_list),
 ]
