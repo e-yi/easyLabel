@@ -1,6 +1,7 @@
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.http import StreamingHttpResponse
 
 from .models import Picture, Label1
 from .serializers import PictureSerializer, Label1Serializer, InfoSerializer
@@ -84,7 +85,7 @@ def picture_review(request, label1, step=0):
     """
     CACHE_NUM = 5
     pictures = Picture.objects.filter(label1=label1) \
-        .order_by('-updated')[step*CACHE_NUM:(step+1)*CACHE_NUM]
+                   .order_by('-updated')[step * CACHE_NUM:(step + 1) * CACHE_NUM]
     serializer = PictureSerializer(pictures, many=True)
     return Response(serializer.data)
 
@@ -108,3 +109,39 @@ def label1_list(request):
             serializer_labels = Label1Serializer(labels, many=True)
             return Response(serializer_labels.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+def output_download(request):
+    import sqlite3
+    import csv
+
+    file = open('output.csv', 'w', newline='')
+    db = sqlite3.connect('./db.sqlite3')
+    sql3_cursor = db.cursor()
+    sql3_cursor.execute('SELECT * FROM tag_picture WHERE label1_id is not NULL and label1_id is not "这是侧脸！"')
+    # print(sql3_cursor.fetchall())
+    csv_out = csv.writer(file)
+    # write header
+    csv_out.writerow([d[0] for d in sql3_cursor.description])
+    # write data
+    for result in sql3_cursor:
+        csv_out.writerow(result)
+    db.close()
+
+    file.close()
+    file = open('output.csv', 'r', newline='')
+
+    def file_iterator(f, chunk_size=512):
+        while True:
+            c = f.read(chunk_size)
+            if c:
+                yield c
+            else:
+                break
+
+    the_file_name = "output.csv"
+    response = StreamingHttpResponse(file_iterator(file))
+    response['Content-Type'] = 'application/octet-stream'
+    response['Content-Disposition'] = 'attachment;filename="{0}"'.format(the_file_name)
+
+    return response

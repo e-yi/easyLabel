@@ -4,6 +4,8 @@ from . import views
 urlpatterns = [
     path('pictures/',
          views.picture_info),
+    path('pictures/csv',
+         views.output_download),
     path('pictures/list/',
          views.picture_list),
     path('pictures/any/',
